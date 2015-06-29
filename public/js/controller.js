@@ -106,6 +106,11 @@ tictactoeapp.controller('ttListCtrl', function($scope){
 
 });
 
+//Recursion is our friend
+
+/*
+	The Reason we auto generate here is becuase i want o expand the amount of matches we do here :)
+*/
 function checkifArrayisEqual(array, plane)
 {
 	console.log("I run");
@@ -144,33 +149,31 @@ function checkifArrayisEqual(array, plane)
 
 function createMatchArray(startingvalue, iterations, increment)
 {
-	console.log("i start " + startingvalue);
 	if(startingvalue >= iterations * iterations)
 	{
 		console.log("i canceled");
-		return;
+		return null;
 	}
 
-	var exportedArray = [];
-	var i = 0;
-	do
-	{
-		console.log(i);
-		var tmpArray = [];
-		var j;
-		for(j = startingvalue; j < iterations + i; j+=increment)
-		{
-			tmpArray.push(startingvalue + increment * j);
-			
-		}
-		i =j;
-		console.log(tmpArray);
-		exportedArray.push(tmpArray);
-	}while(i < iterations * iterations);
+	var exportedArray = {
+		data: [],
+		next: null
+	};
 
-	/*
-		exportedArray.push(tmpArray);
-		exportedArray.push(createMatchArray(startingvalue + iterations * increment + 1, iterations, increment));
-	*/
+	var tmpArray = [];
+	var destination = startingvalue + iterations * increment;
+	console.log("i start " + startingvalue);
+	console.log("destination " + destination);
+
+	for(var j = startingvalue; j < destination; j+=increment)
+	{
+		tmpArray.push(j);		
+	}
+
+	console.log(tmpArray);
+	exportedArray.data.push(tmpArray);
+
+	exportedArray.next = createMatchArray(startingvalue + iterations * increment + 1, iterations, increment);
+
 	return exportedArray;
 }

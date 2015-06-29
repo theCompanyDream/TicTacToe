@@ -6,6 +6,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var routes = require('./routes/index');
 var users = require('./routes/users');
+var node_modules = require("express-node_modules");
 
 var app = express();
 
@@ -20,6 +21,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(node_modules('/lib', require));
 
 var node_modules = require('express-node_modules');
 
